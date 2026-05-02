@@ -117,14 +117,49 @@ def build_report(portfolio, prices, prev, fx):
         lines.append('  SGD ' + str(round(val)) + ' | PnL ' + sign + 'SGD ' + str(round(pnl)) + ' (' + sign + str(round(pnl_pct, 1)) + '%)')
         total_val += val
         total_cost += cost
+    # Per-account subtotals
+    acc_totals = {}
+    for p in portfolio:
+        acc = p['account']
+        t = p['ticker']
+        price = prices.get(t)
+        if price is None:
+            continue
+        if p['cost_currency'] == 'USD':
+            val = price * fx * p['shares']
+            cost = p['avg_cost'] * fx * p['shares']
+        else:
+            val = price * p['shares']
+            cost = p['avg_cost'] * p['shares']
+        if acc not in acc_totals:
+            acc_totals[acc] = {'val': 0, 'cost': 0}
+        acc_totals[acc]['val'] += val
+        acc_totals[acc]['cost'] += cost
+    # Add IGM manual to IGM totals
+    for m in MANUAL_POSITIONS:
+        acc = m['account']
+        val = m['current_value_usd'] * fx
+        cost = m['cost_usd'] * fx
+        if acc not in acc_totals:
+            acc_totals[acc] = {'val': 0, 'cost': 0}
+        acc_totals[acc]['val'] += val
+        acc_totals[acc]['cost'] += cost
+    lines.append('\n--------------------')
+    lines.append('*Account Summary*')
+    for acc, totals in acc_totals.items():
+        av = totals['val']
+        ac = totals['cost']
+        ap = av - ac
+        apct = (ap / ac * 100) if ac else 0
+        sign = '+' if ap >= 0 else ''
+        av_usd = av / fx
+        lines.append(acc + ': SGD ' + str(round(av)) + ' / USD ' + str(round(av_usd)) + ' | PnL ' + sign + str(round(apct, 1)) + '%')
     total_pnl = total_val - total_cost
     total_pct = (total_pnl / total_cost * 100) if total_cost else 0
-    if total_pnl >= 0:
-        sign = '+'
-    else:
-        sign = ''
-    lines.append('\n--------------------')
-    lines.append('Total: SGD ' + str(round(total_val)))
+    sign = '+' if total_pnl >= 0 else ''
+    total_val_usd = total_val / fx
+    lines.append('\n*TOTAL PORTFOLIO*')
+    lines.append('SGD ' + str(round(total_val)) + ' / USD ' + str(round(total_val_usd)))
     lines.append('PnL: ' + sign + 'SGD ' + str(round(total_pnl)) + ' (' + sign + str(round(total_pct, 1)) + '%)')
     return '\n'.join(lines), total_val, total_pct
 def get_ai(report, total_val, total_pct):
@@ -149,7 +184,7 @@ def get_ai(report, total_val, total_pct):
         '[things to monitor]'
     )
     msg = client.messages.create(
-        model='claude-sonnet-4-5',
+        model='claude-sonnet-4-20250514',
         max_tokens=900,
         tools=[{'type': 'web_search_20250305', 'name': 'web_search'}],
         messages=[{'role': 'user', 'content': prompt}]
