@@ -149,7 +149,7 @@ def get_ai(report, total_val, total_pct):
         '[things to monitor]'
     )
     msg = client.messages.create(
-        model='claude-sonnet-4-20250514',
+        model='claude-sonnet-4-5',
         max_tokens=900,
         tools=[{'type': 'web_search_20250305', 'name': 'web_search'}],
         messages=[{'role': 'user', 'content': prompt}]
