@@ -39,9 +39,9 @@ MANUAL_POSITIONS = [
 def fetch_fx():
     try:
         data = yf.download('SGD=X', period='2d', interval='1d', progress=False, auto_adjust=True)
-        return float(data['Close'].dropna().iloc[-1])
+        return 1.0 / float(data['Close'].dropna().iloc[-1])
     except Exception:
-        return 1.35
+        return 1.27
 def fetch_prices(portfolio):
     tickers = [p['ticker'] for p in portfolio]
     prices = {}
