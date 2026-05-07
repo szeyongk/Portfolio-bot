@@ -21,8 +21,8 @@ TIMEZONE = 'Asia/Singapore'
 RISK_PROFILE = 'moderate'
 PORTFOLIO = [
     dict(ticker='AVUV', name='Amer Century SCV', shares=6.5604, avg_cost=119.61, cost_currency='USD', account='Moomoo'),
-    dict(ticker='GOOGL', name='Alphabet (GOOGL)', shares=1.5913, avg_cost=345.171, cost_currency='USD', account='Moomoo'),
-    dict(ticker='NVDA', name='NVIDIA', shares=3.0057, avg_cost=208.85, cost_currency='USD', account='Moomoo'),
+    dict(ticker='GOOGL', name='Alphabet (GOOGL)', shares=5.5913, avg_cost=380.07, cost_currency='USD', account='Moomoo'),
+    dict(ticker='NVDA', name='NVIDIA', shares=18.0057, avg_cost=211.76, cost_currency='USD', account='Moomoo'),
     dict(ticker='QQQ', name='Invesco QQQ', shares=3.5397, avg_cost=660.853, cost_currency='USD', account='Moomoo'),
     dict(ticker='SCHD', name='Schwab Dividend', shares=30.1421, avg_cost=31.24, cost_currency='USD', account='Moomoo'),
     dict(ticker='VOO', name='Vanguard S&P 500', shares=14.0411, avg_cost=654.067, cost_currency='USD', account='Moomoo'),
