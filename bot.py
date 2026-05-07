@@ -444,13 +444,20 @@ def get_ai(report, total_val, total_pct):
         '*WATCH*\n'
         '[things to monitor]'
     )
-    msg = client.messages.create(
-        model='claude-sonnet-4-5',
-        max_tokens=900,
-        tools=[{'type': 'web_search_20250305', 'name': 'web_search'}],
-        messages=[{'role': 'user', 'content': prompt}]
-    )
-    return ''.join(b.text for b in msg.content if b.type == 'text')
+    for attempt in range(3):
+        try:
+            msg = client.messages.create(
+                model='claude-sonnet-4-5',
+                max_tokens=900,
+                tools=[{'type': 'web_search_20250305', 'name': 'web_search'}],
+                messages=[{'role': 'user', 'content': prompt}]
+            )
+            return ''.join(b.text for b in msg.content if b.type == 'text')
+        except Exception as e:
+            print('AI attempt ' + str(attempt + 1) + ' failed: ' + str(e))
+            if attempt < 2:
+                time.sleep(30)
+    return 'AI analysis unavailable - API overloaded. Check markets manually.'
 def send_photo(buf, caption):
     url = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendPhoto'
     requests.post(url, data={'chat_id': TELEGRAM_CHAT_ID, 'caption': caption, 'parse_mode': 'Markdown'},
@@ -481,7 +488,3 @@ def run():
     print('Done!')
 if __name__ == '__main__':
     run()
-    schedule.every().day.at(str(SEND_HOUR).zfill(2) + ':' + str(SEND_MINUTE).zfill(2)).do(run)
-    while True:
-        schedule.run_pending()
-        time.sleep(30)
