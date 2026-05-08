@@ -306,7 +306,7 @@ def get_ai(report, total_val, total_pct):
         'Risk: ' + RISK_PROFILE + ' | Singapore investor\n\n'
         '1. Search today market news for: ' + tickers + '\n'
         '2. List 3 most relevant news items\n'
-        '3. Give HOLD/ADD/TRIM/EXIT recommendation per position\n'
+        '3. Give recommendation per position. Start each line with exactly one of these words: HOLD ADD TRIM EXIT — then the ticker, then your reasoning. Do not use any emoji.\n'
         '4. Flag 1-2 things to watch next 48 hours\n\n'
         'Use Telegram Markdown bold only. Max 350 words.\n\n'
         '*MARKET PULSE*\n'
@@ -330,6 +330,22 @@ def get_ai(report, total_val, total_pct):
             if attempt < 2:
                 time.sleep(30)
     return 'AI analysis unavailable - API overloaded. Check markets manually.'
+def format_recommendations(ai_text):
+    lines = ai_text.split('\n')
+    out = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith('ADD'):
+            out.append(' *ADD* ' + stripped[3:].lstrip(' —-'))
+        elif stripped.startswith('HOLD'):
+            out.append(' *HOLD* ' + stripped[4:].lstrip(' —-'))
+        elif stripped.startswith('TRIM'):
+            out.append(' *TRIM* ' + stripped[4:].lstrip(' —-'))
+        elif stripped.startswith('EXIT'):
+            out.append(' *EXIT* ' + stripped[4:].lstrip(' —-'))
+        else:
+            out.append(line)
+    return '\n'.join(out)
 def send_photo(buf, caption):
     url = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendPhoto'
     requests.post(url, data={'chat_id': TELEGRAM_CHAT_ID, 'caption': caption, 'parse_mode': 'Markdown'},
@@ -356,6 +372,7 @@ def run():
     text_report, total_val, total_pct = build_text_report(positions, prev_prices, fx)
     print('Getting AI analysis...')
     ai = get_ai(text_report, total_val, total_pct)
+    ai = format_recommendations(ai)
     send_photo(chart_buf, 'Portfolio Brief  ' + now_str + ' SGT')
     send_text(text_report + '\n\n' + ai)
     print('Done!')
