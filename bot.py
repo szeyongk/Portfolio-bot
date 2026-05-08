@@ -357,7 +357,10 @@ def send_text(text):
     url = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage'
     chunks = [text[i:i+4000] for i in range(0, len(text), 4000)]
     for chunk in chunks:
-        requests.post(url, json={'chat_id': TELEGRAM_CHAT_ID, 'text': chunk, 'parse_mode': 'Markdown'}, timeout=15)
+        resp = requests.post(url, json={'chat_id': TELEGRAM_CHAT_ID, 'text': chunk, 'parse_mode': 'Markdown'}, timeout=15)
+        if not resp.ok:
+            # Fallback: send without markdown
+            requests.post(url, json={'chat_id': TELEGRAM_CHAT_ID, 'text': chunk}, timeout=15)
         time.sleep(0.5)
 def run():
     tz = pytz.timezone(TIMEZONE)
