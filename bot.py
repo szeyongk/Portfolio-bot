@@ -331,18 +331,21 @@ def get_ai(report, total_val, total_pct):
                 time.sleep(30)
     return 'AI analysis unavailable - API overloaded. Check markets manually.'
 def format_recommendations(ai_text):
+    GREEN = '\U0001F7E2'  # 
+    YELLOW = '\U0001F7E1'  # 
+    RED = '\U0001F534'  # 
     lines = ai_text.split('\n')
     out = []
     for line in lines:
         stripped = line.strip()
         if stripped.startswith('ADD'):
-            out.append(' *ADD* ' + stripped[3:].lstrip(' —-'))
+            out.append(GREEN + ' *ADD* ' + stripped[3:].lstrip(' \u2014-'))
         elif stripped.startswith('HOLD'):
-            out.append(' *HOLD* ' + stripped[4:].lstrip(' —-'))
+            out.append(YELLOW + ' *HOLD* ' + stripped[4:].lstrip(' \u2014-'))
         elif stripped.startswith('TRIM'):
-            out.append(' *TRIM* ' + stripped[4:].lstrip(' —-'))
+            out.append(RED + ' *TRIM* ' + stripped[4:].lstrip(' \u2014-'))
         elif stripped.startswith('EXIT'):
-            out.append(' *EXIT* ' + stripped[4:].lstrip(' —-'))
+            out.append(RED + ' *EXIT* ' + stripped[4:].lstrip(' \u2014-'))
         else:
             out.append(line)
     return '\n'.join(out)
