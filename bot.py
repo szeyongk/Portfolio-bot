@@ -23,9 +23,9 @@ PORTFOLIO = [
     dict(ticker='AVUV', name='Amer Century SCV', shares=6.5604, avg_cost=119.61, cost_currency='USD', account='Moomoo'),
     dict(ticker='GOOGL', name='Alphabet (GOOGL)', shares=5.5913, avg_cost=380.07, cost_currency='USD', account='Moomoo'),
     dict(ticker='NVDA', name='NVIDIA', shares=18.0057, avg_cost=211.549, cost_currency='USD', account='Moomoo'),
-    dict(ticker='QQQ', name='Invesco QQQ', shares=3.5397, avg_cost=660.853, cost_currency='USD', account='Moomoo'),
+    dict(ticker='QQQ', name='Invesco QQQ', shares=6.9517, avg_cost=695.676, cost_currency='USD', account='Moomoo'),
     dict(ticker='SCHD', name='Schwab Dividend', shares=30.1421, avg_cost=31.24, cost_currency='USD', account='Moomoo'),
-    dict(ticker='VOO', name='Vanguard S&P 500', shares=14.0411, avg_cost=654.067, cost_currency='USD', account='Moomoo'),
+    dict(ticker='VOO', name='Vanguard S&P 500', shares=19.7762, avg_cost=664.544, cost_currency='USD', account='Moomoo'),
     dict(ticker='VXUS', name='Vanguard Intl', shares=2.8491, avg_cost=82.479, cost_currency='USD', account='Moomoo'),
     dict(ticker='Z74.SI', name='Singtel', shares=100, avg_cost=3.287, cost_currency='SGD', account='IGM'),
     dict(ticker='CRO-USD', name='Cronos (CRO)', shares=7724.05, avg_cost=0.5988, cost_currency='USD', account='Crypto.com'),
@@ -366,10 +366,8 @@ def run():
     now_sgt = datetime.now(tz)
     now_str = now_sgt.strftime('%d %b %Y %H:%M')
     today_str = now_sgt.strftime('%d %b %Y %H:%M SGT')
-    # AI reco only on alternating Mondays (even week numbers)
-    is_monday = now_sgt.weekday() == 0
-    is_even_week = now_sgt.isocalendar()[1] % 2 == 0
-    send_ai = is_monday and is_even_week
+    # AI reco every Monday
+    send_ai = now_sgt.weekday() == 0
     print('Starting update ' + now_str + ' SGT')
     fx = fetch_fx()
     print('FX: 1 USD = {:.4f} SGD'.format(fx))
