@@ -21,13 +21,13 @@ TIMEZONE = 'Asia/Singapore'
 RISK_PROFILE = 'moderate'
 PORTFOLIO = [
     dict(ticker='AVUV', name='Amer Century SCV', shares=6.5604, avg_cost=119.61, cost_currency='USD', account='Moomoo'),
-    dict(ticker='GOOGL', name='Alphabet (GOOGL)', shares=5.5913, avg_cost=380.07, cost_currency='USD', account='Moomoo'),
-    dict(ticker='NVDA', name='NVIDIA', shares=18.0057, avg_cost=211.549, cost_currency='USD', account='Moomoo'),
+    dict(ticker='GOOGL', name='Alphabet (GOOGL)', shares=5.5913, avg_cost=380.103, cost_currency='USD', account='Moomoo'),
+    dict(ticker='NVDA', name='NVIDIA', shares=18.08, avg_cost=210.68, cost_currency='USD', account='Moomoo'),
     dict(ticker='QQQ', name='Invesco QQQ', shares=6.9517, avg_cost=695.676, cost_currency='USD', account='Moomoo'),
     dict(ticker='SCHD', name='Schwab Dividend', shares=30.1421, avg_cost=31.24, cost_currency='USD', account='Moomoo'),
-    dict(ticker='VOO', name='Vanguard S&P 500', shares=19.7762, avg_cost=664.544, cost_currency='USD', account='Moomoo'),
-    dict(ticker='VXUS', name='Vanguard Intl', shares=2.8491, avg_cost=82.479, cost_currency='USD', account='Moomoo'),
-    dict(ticker='Z74.SI', name='Singtel', shares=100, avg_cost=3.287, cost_currency='SGD', account='IGM'),
+    dict(ticker='VOO', name='Vanguard S&P 500', shares=21.7246, avg_cost=666.049, cost_currency='USD', account='Moomoo'),
+    dict(ticker='VXUS', name='Vanguard Intl', shares=14.8491, avg_cost=84.306, cost_currency='USD', account='Moomoo'),
+    dict(ticker='Z74.SI', name='Singtel', shares=100, avg_cost=4.30, cost_currency='SGD', account='Moomoo'),
     dict(ticker='CRO-USD', name='Cronos (CRO)', shares=7724.05, avg_cost=0.5988, cost_currency='USD', account='Crypto.com'),
     dict(ticker='ETH-USD', name='Ethereum (ETH)', shares=0.18215232, avg_cost=4720.75, cost_currency='USD', account='Crypto.com'),
     dict(ticker='ETHW-USD', name='EthereumPoW', shares=0.18215232, avg_cost=0.38, cost_currency='USD', account='Crypto.com'),
