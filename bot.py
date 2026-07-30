@@ -50,7 +50,10 @@ def fetch_fx():
     try:
         last = yf.Ticker('SGD=X').fast_info['last_price']
         if last is not None:
-            return 1.0 / _to_scalar(last)
+            fx_val = _to_scalar(last)
+            if 1.0 < fx_val < 2.0:
+                return fx_val
+            print('FX live-quote out of plausible range (' + str(fx_val) + '), trying daily close next')
     except Exception as e:
         print('FX live-quote fetch error (trying daily close next): ' + str(e))
     try:
