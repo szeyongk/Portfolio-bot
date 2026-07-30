@@ -38,10 +38,16 @@ MANUAL_POSITIONS = [
 ]
 def fetch_fx():
     try:
+        last = yf.Ticker('SGD=X').fast_info['last_price']
+        if last:
+            return 1.0 / float(last)
+    except Exception as e:
+        print('FX live-quote fetch error (trying daily close next): ' + str(e))
+    try:
         data = yf.download('SGD=X', period='2d', interval='1d', progress=False, auto_adjust=True)
         return 1.0 / float(data['Close'].dropna().iloc[-1])
     except Exception as e:
-        print('FX fetch error (using fallback 1.27): ' + str(e))
+        print('FX daily-close fetch error (using fallback 1.27): ' + str(e))
         return 1.27
 def fetch_prices(portfolio):
     tickers = list(dict.fromkeys(p['ticker'] for p in portfolio))
