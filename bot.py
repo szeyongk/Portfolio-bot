@@ -36,11 +36,21 @@ PORTFOLIO = [
 MANUAL_POSITIONS = [
     dict(name='Fidelity Asia ESG', account='IGM', cost_usd=989.63, current_value_usd=1062.00),
 ]
+def _to_scalar(x):
+    try:
+        return float(x)
+    except (TypeError, ValueError):
+        pass
+    try:
+        return float(x.iloc[-1])
+    except Exception:
+        pass
+    return float(np.asarray(x).reshape(-1)[-1])
 def fetch_fx():
     try:
         last = yf.Ticker('SGD=X').fast_info['last_price']
-        if last:
-            return 1.0 / float(last)
+        if last is not None:
+            return 1.0 / _to_scalar(last)
     except Exception as e:
         print('FX live-quote fetch error (trying daily close next): ' + str(e))
     try:
