@@ -43,7 +43,7 @@ def fetch_fx():
     except Exception:
         return 1.27
 def fetch_prices(portfolio):
-    tickers = [p['ticker'] for p in portfolio]
+    tickers = list(dict.fromkeys(p['ticker'] for p in portfolio))
     prices = {}
     prev = {}
     try:
