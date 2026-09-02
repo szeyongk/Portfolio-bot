@@ -25,6 +25,7 @@ PORTFOLIO = [
     dict(ticker='NVDA', name='NVIDIA', shares=18.4645, avg_cost=206.293, cost_currency='USD', account='Moomoo'),
     dict(ticker='QQQ', name='Invesco QQQ', shares=6.9517, avg_cost=695.676, cost_currency='USD', account='Moomoo'),
     dict(ticker='SCHD', name='Schwab Dividend', shares=30.1421, avg_cost=31.24, cost_currency='USD', account='Moomoo'),
+    dict(ticker='SPCX', name='SpaceX', shares=4.9526, avg_cost=140.53, cost_currency='USD', account='Moomoo'),
     dict(ticker='VOO', name='Vanguard S&P 500', shares=22.9825, avg_cost=668.322, cost_currency='USD', account='Moomoo'),
     dict(ticker='VXUS', name='Vanguard Intl', shares=14.8491, avg_cost=84.306, cost_currency='USD', account='Moomoo'),
     dict(ticker='Z74.SI', name='Singtel (Moomoo)', shares=100, avg_cost=4.30, cost_currency='SGD', account='Moomoo'),
