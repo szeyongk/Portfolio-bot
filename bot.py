@@ -392,8 +392,11 @@ def run():
     now_str = now_sgt.strftime('%d %b %Y %H:%M')
     today_str = now_sgt.strftime('%d %b %Y %H:%M SGT')
     # AI reco every Monday
-    send_ai = now_sgt.weekday() == 0
+    # Monday, or an early-morning Tuesday run (covers a delayed Monday cron that slipped past midnight)
+    send_ai = now_sgt.weekday() == 0 or (now_sgt.weekday() == 1 and now_sgt.hour < 6)
     print('Starting update ' + now_str + ' SGT')
+    weekday_names = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    print('send_ai = ' + str(send_ai) + ' (weekday=' + weekday_names[now_sgt.weekday()] + ', hour=' + str(now_sgt.hour) + ')')
     fx = fetch_fx()
     print('FX: 1 USD = {:.4f} SGD'.format(fx))
     prices, prev_prices = fetch_prices(PORTFOLIO)
