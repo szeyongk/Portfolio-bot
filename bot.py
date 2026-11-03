@@ -29,6 +29,7 @@ PORTFOLIO = [
     dict(ticker='VOO', name='Vanguard S&P 500', shares=28.8303, avg_cost=676.482, cost_currency='USD', account='Moomoo'),
     dict(ticker='VXUS', name='Vanguard Intl', shares=14.8491, avg_cost=84.306, cost_currency='USD', account='Moomoo'),
     dict(ticker='Z74.SI', name='Singtel (Moomoo)', shares=100, avg_cost=4.30, cost_currency='SGD', account='Moomoo'),
+    dict(ticker='D05.SI', name='DBS', shares=20, avg_cost=72.40, cost_currency='SGD', account='Moomoo'),
     dict(ticker='Z74.SI', name='Singtel (IGM)', shares=100, avg_cost=3.287, cost_currency='SGD', account='IGM'),
     dict(ticker='CRO-USD', name='Cronos (CRO)', shares=7724.05, avg_cost=0.5988, cost_currency='USD', account='Crypto.com'),
     dict(ticker='ETH-USD', name='Ethereum (ETH)', shares=0.18215232, avg_cost=4720.75, cost_currency='USD', account='Crypto.com'),
